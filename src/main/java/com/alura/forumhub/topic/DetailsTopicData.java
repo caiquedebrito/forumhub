@@ -8,7 +8,7 @@ public record DetailsTopicData(
         String message,
         String author,
         String course,
-        String state,
+        TopicState state,
         LocalDateTime createdAt
 ) {
     public DetailsTopicData(Topic topic) {

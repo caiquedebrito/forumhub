@@ -28,8 +28,8 @@ public class Topic {
     @Column(length = 100)
     private String course;
 
-    @Column(length = 20)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    private TopicState state;
     private LocalDateTime createdAt;
 
     public Topic(CreateTopicData data) {
@@ -37,7 +37,7 @@ public class Topic {
         this.message = data.message();
         this.author = data.author();
         this.course = data.course();
-        this.state = "ativo";
+        this.state = TopicState.ABERTO;
         this.createdAt = LocalDateTime.now();
     }
 }
