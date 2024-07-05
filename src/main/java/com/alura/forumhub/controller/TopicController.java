@@ -1,9 +1,6 @@
 package com.alura.forumhub.controller;
 
-import com.alura.forumhub.topic.CreateTopicData;
-import com.alura.forumhub.topic.DetailsTopicData;
-import com.alura.forumhub.topic.Topic;
-import com.alura.forumhub.topic.TopicRepository;
+import com.alura.forumhub.topic.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,5 +63,14 @@ public class TopicController {
         topic.update(data);
 
         return ResponseEntity.ok(new DetailsTopicData(topic));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id) {
+        var topic = topicRepository.getReferenceById(id);
+        topic.delete();
+
+        return ResponseEntity.noContent().build();
     }
 }

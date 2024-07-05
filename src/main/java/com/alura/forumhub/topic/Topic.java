@@ -56,4 +56,8 @@ public class Topic {
             this.course = data.course();
         }
     }
+
+    public void delete() {
+        this.state = TopicState.CLOSED;
+    }
 }
