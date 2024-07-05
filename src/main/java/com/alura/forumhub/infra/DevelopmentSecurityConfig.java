@@ -1,4 +1,4 @@
-package com.alura.forumhub;
+package com.alura.forumhub.infra;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
