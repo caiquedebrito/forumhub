@@ -2,6 +2,7 @@ package com.alura.forumhub.topic;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode(of = "id")
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

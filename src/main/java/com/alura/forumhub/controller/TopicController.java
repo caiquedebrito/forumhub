@@ -24,7 +24,7 @@ public class TopicController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody @Valid CreateTopicData data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetailsTopicData> create(@RequestBody @Valid CreateTopicData data, UriComponentsBuilder uriBuilder) {
         var topic = new Topic(data);
         topicRepository.save(topic);
 
@@ -51,5 +51,11 @@ public class TopicController {
         }
 
         return ResponseEntity.ok(topics);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DetailsTopicData> get(@PathVariable Long id) {
+        var topic = topicRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DetailsTopicData(topic));
     }
 }
