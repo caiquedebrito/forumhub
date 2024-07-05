@@ -58,4 +58,13 @@ public class TopicController {
         var topic = topicRepository.getReferenceById(id);
         return ResponseEntity.ok(new DetailsTopicData(topic));
     }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<DetailsTopicData> update(@PathVariable Long id, @RequestBody UpdateTopicData data) {
+        var topic = topicRepository.getReferenceById(id);
+        topic.update(data);
+
+        return ResponseEntity.ok(new DetailsTopicData(topic));
+    }
 }

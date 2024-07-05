@@ -39,7 +39,21 @@ public class Topic {
         this.message = data.message();
         this.author = data.author();
         this.course = data.course();
-        this.state = TopicState.ABERTO;
+        this.state = TopicState.OPEN;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void update(UpdateTopicData data) {
+        if (data.title() != null) {
+            this.title = data.title();
+        }
+
+        if (data.message() != null) {
+            this.message = data.message();
+        }
+
+        if (data.course() != null) {
+            this.course = data.course();
+        }
     }
 }
