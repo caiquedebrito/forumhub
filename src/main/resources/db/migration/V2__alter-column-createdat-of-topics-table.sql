@@ -1,0 +1,1 @@
+alter table topics modify column created_at datetime default current_timestamp();

@@ -1,4 +1,4 @@
-package com.alura.forumhub.topic;
+package com.alura.forumhub.domain.topic;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -58,6 +58,6 @@ public class Topic {
     }
 
     public void delete() {
-        this.state = TopicState.CLOSED;
+        this.state = TopicState.DELETED;
     }
 }

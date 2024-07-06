@@ -1,4 +1,4 @@
-package com.alura.forumhub.topic;
+package com.alura.forumhub.domain.topic;
 
 public record UpdateTopicData(
         String title,

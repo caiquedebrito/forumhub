@@ -1,6 +1,6 @@
 package com.alura.forumhub.controller;
 
-import com.alura.forumhub.topic.*;
+import com.alura.forumhub.domain.topic.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("topics")
@@ -32,34 +34,35 @@ public class TopicController {
 
     @GetMapping
     public ResponseEntity<Page<DetailsTopicData>> list(
-            @RequestParam(required = false, name = "course") String course,
-            @RequestParam(required = false, name = "year") String year,
-            @PageableDefault(size = 10, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
+            @RequestParam(required = false, name = "course") Optional<String> course,
+            @RequestParam(required = false, name = "year") Optional<String> year,
+            @PageableDefault(sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<DetailsTopicData> topics;
-        if (course == null && year == null) {
-            topics = topicRepository.findAll(pageable).map(DetailsTopicData::new);
-        } else if (course == null) {
-            topics = topicRepository.findByYear(year, pageable);
-        } else if (year == null) {
-            topics = topicRepository.findByCourse(course, pageable);
+        Page<Topic> topics;
+
+        if (course.isPresent() && year.isPresent()) {
+            topics = topicRepository.findByYearAnByCourse(year.get(), course.get(), pageable);
+        } else if (course.isPresent()) {
+            topics = topicRepository.findByCourse(course.get(), pageable);
+        } else if (year.isPresent()) {
+            topics = topicRepository.findByYear(year.get(), pageable);
         } else {
-            topics = topicRepository.fingByYearAnByCourse(year, course, pageable);
+            topics = topicRepository.findAllTopics(pageable);
         }
 
-        return ResponseEntity.ok(topics);
+        return ResponseEntity.ok(topics.map(DetailsTopicData::new));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DetailsTopicData> get(@PathVariable Long id) {
-        var topic = topicRepository.getReferenceById(id);
+        var topic = topicRepository.getTopic(id);
         return ResponseEntity.ok(new DetailsTopicData(topic));
     }
 
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DetailsTopicData> update(@PathVariable Long id, @RequestBody UpdateTopicData data) {
-        var topic = topicRepository.getReferenceById(id);
+        var topic = topicRepository.getTopic(id);
         topic.update(data);
 
         return ResponseEntity.ok(new DetailsTopicData(topic));

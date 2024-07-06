@@ -1,4 +1,4 @@
-package com.alura.forumhub.topic;
+package com.alura.forumhub.domain.topic;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +12,6 @@ public record DetailsTopicData(
         LocalDateTime createdAt
 ) {
     public DetailsTopicData(Topic topic) {
-       this(topic.getId(), topic.getTitle(), topic.getMessage(), topic.getAuthor(), topic.getCourse(), topic.getState(), LocalDateTime.now());
+       this(topic.getId(), topic.getTitle(), topic.getMessage(), topic.getAuthor(), topic.getCourse(), topic.getState(), topic.getCreatedAt());
     }
 }
