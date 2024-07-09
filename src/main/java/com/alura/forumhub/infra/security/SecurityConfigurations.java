@@ -27,7 +27,7 @@ public class SecurityConfigurations {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(r -> {
-                    r.requestMatchers(HttpMethod.POST, "/login").permitAll();
+                    r.requestMatchers(HttpMethod.POST, "users/login", "users/register").permitAll();
                     r.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
